@@ -5,6 +5,26 @@ type BestSellerList = {
     results: ListItem[]
 }
 
+type ListTopBooks = {
+    status: string
+    copyright: string
+    num_results: number,
+    results: {
+        bestsellers_date: string
+        published_date: string
+        published_date_description: string
+        next_published_date: string
+        previous_published_date: string
+        lists: {
+            list_id: string
+            list_name: string
+            display_name: string
+            list_image: string
+            books: ListBook[]
+        }[]
+    }
+}
+
 type ListItem = {
     list_name: string
     display_name: string
@@ -14,24 +34,26 @@ type ListItem = {
     updated: string
 }
 
+type ListBooksResult = {
+    list_name: string
+    list_name_encoded: string
+    bestsellers_date: string
+    published_date: string
+    published_date_description: string
+    next_published_date: string
+    previous_published_date: string
+    display_name: string
+    normal_list_ends_at: number,
+    updated: string
+    books: ListBook[]
+}
+
 type ListBooks = {
     status: string
     copyright: string
     num_results: number
     last_modified: string
-    results: {
-        list_name: string
-        list_name_encoded: string
-        bestsellers_date: string
-        published_date: string
-        published_date_description: string
-        next_published_date: string
-        previous_published_date: string
-        display_name: string
-        normal_list_ends_at: number,
-        updated: string
-        books: ListBook[]
-    }
+    results: ListBooksResult
 }
 
 type ListBook = {

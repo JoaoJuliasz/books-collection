@@ -17,7 +17,7 @@ const ListsTopBooks = ({ topBooks }: Props) => {
                                     section.books.map(book => {
                                         return (
                                             <Link href={`/lists/${section.list_name}/${book.title}`} key={book.rank} style={{ width: '20%', display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-                                                <img width={150} height={150} alt={book.title} src={book.book_image} />
+                                                <img width={250} height={350} alt={book.title} src={book.book_image} />
                                                 <h5>{book.title}</h5>
                                             </Link>
                                         )

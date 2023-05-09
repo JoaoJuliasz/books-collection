@@ -1,42 +1,74 @@
 'use client'
-
-import React, { useEffect, useState } from 'react';
-
+import React, { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 import glass from '@/public/glass.svg'
-
 import styles from './searchField.module.scss'
 
 
 const SearchField = () => {
 
     const [searchField, setSerchField] = useState<string>("")
-    const [autocompleteItems, setAutocompleteItems] = useState<any>([])
+    const [autocompleteItems, setAutocompleteItems] = useState<selectedBook[]>([])
 
+    const node = useRef<HTMLDivElement | null>(null)
+
+    const triggerSearchedBooks = async () => {
+        if (searchField) {
+            const res = await fetch(`http://localhost:3000/api/filtered?title=${searchField}`)
+            const data = await res.json()
+            setAutocompleteItems(data)
+        }
+    }
+
+    const handleInputFocus = () => {
+        triggerSearchedBooks()
+    }
+
+    const handleClickOutSide = (e: any) => {
+        if (node.current?.contains(e.target)) {
+            return
+        }
+
+        setAutocompleteItems([])
+    }
 
     useEffect(() => {
-        const delayDebounceFn = setTimeout(async () => {
-            if (searchField) {
-                const res = await fetch(`http://localhost:3000/api/filtered?title=${searchField}`)
-                const data = await res.json()
-                setAutocompleteItems(data)
-            }
+        const delayDebounceFn = setTimeout(() => {
+            triggerSearchedBooks()
         }, 200)
         return () => clearTimeout(delayDebounceFn)
     }, [searchField])
 
-    console.warn(autocompleteItems.length > 0)
+    useEffect(() => {
+        if (autocompleteItems.length > 0) {
+            document.addEventListener("mousedown", handleClickOutSide)
+        } else {
+            document.removeEventListener("mousedown", handleClickOutSide)
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutSide)
+        }
+    }, [autocompleteItems])
+
+    console.warn(autocompleteItems)
 
     return (
-        <div className={styles.container}>
-            <Image src={glass} alt="glass" className={styles.icon} />
-            <input type="text" onChange={e => setSerchField(e.target.value)} className={styles.input} />
+        <div ref={node} className={styles.container}>
+            <div className={styles.inputContainer}>
+                <Image src={glass} alt="glass" className={styles.icon} />
+                <input type="text" onChange={e => setSerchField(e.target.value)}
+                    className={styles.input} onFocus={handleInputFocus} placeholder="Search for a book!" />
+            </div>
             {autocompleteItems.length > 0 ?
                 (<div className={styles.autocomplete}>
-                    {autocompleteItems.map((item) => (
-                        <>
+                    {autocompleteItems.map((item, index) => (
+                        <Link href={`/lists/${item.ranks_history[0]?.list_name}/${item.title}`}
+                            onClick={() => setAutocompleteItems([])}
+                            key={index} className={styles.item}>
                             <h4>{item.title}</h4> <span>{item.ranks_history[0]?.list_name}</span>
-                        </>
+                        </Link>
                     ))
                     }
                 </div>) :

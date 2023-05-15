@@ -1,0 +1,43 @@
+.carousel {
+  width: 100%;
+
+  .inner {
+    white-space: nowrap;
+    transition: transform 0.3s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    @media (min-width: 1350px) {
+      transform: none !important;
+    }
+  }
+
+  .carousel-item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 20%;
+    transform: translateZ(0);
+    transition: transform 0.25s ease-out;
+
+    &:hover {
+      transform: scale(1.05);
+      img {
+        box-shadow: -8px -1px 62px -13px rgba(84,84,84,1);
+      }
+    }
+
+    @media (max-width: 460px) {
+      width: 100%;
+      margin: 0 4px;
+    }
+
+    @media (min-width: 945px) and (max-width: 1349px) {
+      width: 33%;
+      margin: 0 30px;
+    }
+  }
+}

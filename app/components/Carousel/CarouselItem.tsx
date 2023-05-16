@@ -7,9 +7,9 @@ type Props = {
 
 const CarouselItem = ({ children }: Props) => {
     return (
-        <div className={styles["carousel-item"]}>
+        <li className={styles["carousel-item"]}>
             {children}
-        </div>
+        </li>
     );
 };
 

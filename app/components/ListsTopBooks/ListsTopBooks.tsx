@@ -14,7 +14,7 @@ const ListsTopBooks = ({ topBooks }: Props) => {
                     return (
                         <section key={section.list_id} style={{ margin: '4px' }}>
                             <h3 style={{ margin: '1rem 0.7rem', color: '#858585' }}>{section.list_name}</h3>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                            <ul style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
                                 <Carousel>
                                     {
                                         section.books.map(book => {
@@ -24,7 +24,7 @@ const ListsTopBooks = ({ topBooks }: Props) => {
                                         })
                                     }
                                 </Carousel>
-                            </div>
+                            </ul>
                         </section>
                     )
                 })

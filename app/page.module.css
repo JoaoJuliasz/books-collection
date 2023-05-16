@@ -4,4 +4,5 @@
   justify-content: space-between;
   padding: 4rem 2rem;
   min-height: 90vh;
+  z-index: 1;
 }

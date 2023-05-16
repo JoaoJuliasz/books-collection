@@ -13,8 +13,8 @@ export default async function Home() {
   const topBooks = await topBooksData
 
   return (
-    <main className={styles.main}>
+    <div>
       <ListsTopBooks topBooks={topBooks} />
-    </main>
+    </div>
   )
 }

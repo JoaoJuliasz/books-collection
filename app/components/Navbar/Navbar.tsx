@@ -1,10 +1,17 @@
+'use client'
 import Link from 'next/link';
 
 import logo from '@/public/logo.svg'
 import Image from 'next/image';
 import SearchField from './SearchField/SearchField';
+import { getSession, useSession } from 'next-auth/react';
 
 const Navbar = () => {
+
+    const { data: session, status } = useSession()
+
+    console.warn(session?.user)
+    console.warn(session?.user.name)
 
     return (
         <nav style={{
@@ -24,11 +31,19 @@ const Navbar = () => {
                     <Link style={{ margin: '0 0.3em', fontSize: '1.2rem' }} href="/lists">Lists</Link>
                     <Link style={{ margin: '0 0.3em', fontSize: '1.2rem' }} href="/best-sellers">Best Sellers</Link>
                 </div>
-                <div>
-                    <Link style={{ fontSize: '1.2rem', margin: '0 1em' }} href="/login">Login</Link>
-                </div>
+                {status !== 'loading' && !session ?
+                    <div>
+                        <Link style={{ fontSize: '1.2rem', margin: '0 1em' }} href="/login">Login</Link>
+                    </div>
+                    : null}
+                {session ?
+                    <div>
+                        <Link style={{ fontSize: '1.2rem', margin: '0 1em' }} href="/logout">Logout</Link>
+                    </div>
+                    : null
+                }
             </section>
-        </nav>
+        </nav >
     );
 };
 

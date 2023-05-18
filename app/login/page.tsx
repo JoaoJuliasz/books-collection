@@ -1,6 +1,8 @@
 'use client'
-import React, { ChangeEvent, FormEventHandler, useReducer } from 'react';
+import React, { ChangeEvent, useReducer } from 'react';
 import Link from 'next/link'
+
+import { signIn } from 'next-auth/react';
 
 enum SignupActionKind {
     USERNAME = 'USERNAME',
@@ -26,11 +28,18 @@ const Login = () => {
     const [state, dispatch] = useReducer(reducer, initialState)
 
     const authenticateUser = async () => {
-        // const { username, password } = state 
-        await fetch('/api/signin', {
-            method: 'POST',
-            body: JSON.stringify(state)
-        })
+        console.warn('entrei aq?')
+        try {
+            const { username, password } = state
+            const result = await signIn('credentials', {
+                redirect: true,
+                username,
+                password,
+                callbackUrl: '/'
+            })
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const handleUsername = (e: ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +53,6 @@ const Login = () => {
 
     const handleSubmit = (e: any) => {
         e.preventDefault()
-        console.warn(state)
         authenticateUser()
     }
 

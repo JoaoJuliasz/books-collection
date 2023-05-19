@@ -25,9 +25,6 @@
 
     &:hover {
       transform: scale(1.05);
-      img {
-        box-shadow: -8px -1px 62px -13px rgba(84,84,84,1);
-      }
     }
 
     @media (max-width: 460px) {

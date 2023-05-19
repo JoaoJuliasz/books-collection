@@ -10,9 +10,9 @@ type Props = {
 const Item = ({ listName, book }: Props) => {
     return (
         <CarouselItem key={book.rank} width="auto">
-            <Link href={`/lists/${listName}/${book.title}`} key={book.rank}>
+            <Link href={`/lists/${listName}/${book.title}`} key={book.rank} style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                 <img width={250} height={350} alt={book.title} src={book.book_image} />
-                <h5>{book.title}</h5>
+                <h5 style={{whiteSpace: 'break-spaces', textAlign: 'center'}}>{book.title}</h5>
             </Link>
         </CarouselItem>
     );

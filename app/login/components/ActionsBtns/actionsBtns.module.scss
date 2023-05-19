@@ -1,0 +1,50 @@
+.container {
+    .linksContainer {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+
+        .forgot {
+            color: #a3a2a2;
+            margin: 7px 0px;
+
+            transition: color 0.2s;
+
+            &:hover {
+                color: #b6b5b5;
+            }
+        }
+
+        .notMember {
+            color: rgb(106, 106, 106);
+            margin: 0px 0px 10px;
+
+            .signUp {
+                color: #a3a2a2;
+                transition: color 0.2s;
+
+                &:hover {
+                    color: #b6b5b5;
+                }
+            }
+        }
+    }
+
+    .btn {
+        width: 250px;
+        padding: 7px 0px;
+        background: #bebebe;
+        color: rgb(136, 135, 135);
+        cursor: pointer;
+        border: 1px solid #bebebe;
+        border-radius: 3px;
+        margin: 15px 0px;
+
+        transition: background 0.3s;
+
+        &:hover {
+            background: #cacaca;
+            border-color: #cacaca;
+        }
+    }
+}

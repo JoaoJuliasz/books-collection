@@ -5,13 +5,19 @@ import logo from '@/public/logo.svg'
 import Image from 'next/image';
 import SearchField from './SearchField/SearchField';
 import { getSession, useSession } from 'next-auth/react';
+import { usePathname } from 'next/navigation';
 
 const Navbar = () => {
+    const pathname = usePathname();
+    const hideNavbar = pathname === '/login'
+
 
     const { data: session, status } = useSession()
 
     console.warn(session?.user)
     console.warn(session?.user.name)
+
+    if (hideNavbar) return null
 
     return (
         <nav style={{

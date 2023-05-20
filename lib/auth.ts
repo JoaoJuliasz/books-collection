@@ -14,20 +14,20 @@ export const authOptions: NextAuthOptions = {
             async authorize(credentials) {
                 const { username, password } = credentials as any
                 if (!username || !password) {
-                    throw new Error('Invalid data')
+                    throw new Error('Username/password missing!')
                 }
                 const client = await MongoClient.connect(process.env.MONGO_URL!)
 
                 const result = await client.db().collection('users').findOne({ username: username })
                 if (!result) {
                     client.close()
-                    throw new Error('username or password invalid!')
+                    throw new Error('username/password invalid!')
                 }
 
                 const checkPassword = await compare(password, result.password)
                 if (!checkPassword) {
                     client.close()
-                    throw new Error('username or password invalid!')
+                    throw new Error('Username/password invalid!')
                 }
 
                 const user: { user: string, id: string } = { user: result.username, id: String(result._id) }

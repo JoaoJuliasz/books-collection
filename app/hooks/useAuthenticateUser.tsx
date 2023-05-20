@@ -1,10 +1,17 @@
 import { signIn } from 'next-auth/react';
-import { useCallback } from 'react';
-import { toast } from 'react-toastify';
+import { useCallback, useState } from 'react';
+import { useRouter } from 'next/navigation';
+
 
 export const useAuthenticateUser = () => {
 
+    const [error, setError] = useState<string>("")
+    const [loading, setLoading] = useState<boolean>(false)
+
+    const router = useRouter()
+
     const authenticateUser = useCallback(async (username: string, password: string) => {
+        setLoading(true)
         try {
             const result = await signIn('credentials', {
                 redirect: false,
@@ -13,23 +20,16 @@ export const useAuthenticateUser = () => {
             })
             if (result?.error) {
                 console.log(result.error)
-                toast('🦄 Wow so easy!', {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                    });
-                // toast.error(result?.error)
+                setError(result.error)
             }
+            setLoading(false)
+            router.push('/')
         } catch (error) {
             console.log(error)
+            setLoading(false)
         }
     }, [])
 
-    return { authenticateUser }
+    return { loading, error, authenticateUser }
 
 };

@@ -3,7 +3,7 @@
 import { useLogin } from '@/app/hooks/useLogin';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import ActionsBtns from '../ActionsBtns/ActionsBtns';
 import LabelInput from '../LabelInput/LabelInput';
 
@@ -16,13 +16,13 @@ import styles from './form.module.scss'
 const Form = () => {
 
     const { state: { username, password }, handleChange } = useLogin()
-    const { authenticateUser } = useAuthenticateUser()
+    const { loading, error, authenticateUser } = useAuthenticateUser()
 
     const handleSubmit = (e: any) => {
         e.preventDefault()
         authenticateUser(username, password)
     }
-
+    
     return (
         <form className={styles.container}
             onSubmit={handleSubmit}>
@@ -32,11 +32,12 @@ const Form = () => {
                 </Link>
                 <h3>Sign In</h3>
             </section>
-            <section id="s2" style={{ width: '100%' }}>
+            <section id="s2" className={styles.inputSection}>
                 <LabelInput handleChange={handleChange} name={"username"} value={username} labelText={"Username"} placeholder={"Jane Doe"} inputType={"text"} />
                 <LabelInput handleChange={handleChange} name={"password"} value={password} labelText={"Password"} placeholder={"•••••••••"} inputType={"password"} />
+                {error ? <h3>{error}</h3> : null}
             </section>
-            <ActionsBtns />
+            <ActionsBtns loading={loading} />
         </form>
     );
 };

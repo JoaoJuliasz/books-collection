@@ -1,16 +1,14 @@
 'use client'
 
-import { useLogin } from '@/app/hooks/useLogin';
-import Image from 'next/image';
-import Link from 'next/link';
-import React, { useState } from 'react';
-import ActionsBtns from '../ActionsBtns/ActionsBtns';
-import LabelInput from '../LabelInput/LabelInput';
+import { SignInActionKind, useLogin } from '@/app/hooks/login/useLogin';
+import React from 'react';
+import LabelInput from '@/app/components/LabelInput/LabelInput';
 
-import logo from '@/public/login-logo.svg'
-import { useAuthenticateUser } from '@/app/hooks/useAuthenticateUser';
+import { useAuthenticateUser } from '@/app/hooks/login/useAuthenticateUser';
 
 import styles from './form.module.scss'
+import AuthenticationLogo from '@/app/components/AuthenticationLogo/AuthenticationLogo';
+import AuthenticationBtns from '@/app/components/AuthenticationBtns/AuthenticationBtns';
 
 
 const Form = () => {
@@ -22,22 +20,17 @@ const Form = () => {
         e.preventDefault()
         authenticateUser(username, password)
     }
-    
+
     return (
         <form className={styles.container}
             onSubmit={handleSubmit}>
-            <section id="s1" className={styles.logoSection}>
-                <Link href="/">
-                    <Image src={logo} alt="logo" />
-                </Link>
-                <h3>Sign In</h3>
-            </section>
+            <AuthenticationLogo title="Sign In" />
             <section id="s2" className={styles.inputSection}>
-                <LabelInput handleChange={handleChange} name={"username"} value={username} labelText={"Username"} placeholder={"Jane Doe"} inputType={"text"} />
-                <LabelInput handleChange={handleChange} name={"password"} value={password} labelText={"Password"} placeholder={"•••••••••"} inputType={"password"} />
+                <LabelInput handleChange={e => handleChange(e, SignInActionKind.USERNAME)} name={"username"} value={username} labelText={"Username"} inputType={"text"} />
+                <LabelInput handleChange={e => handleChange(e, SignInActionKind.PASSWORD)} name={"password"} value={password} labelText={"Password"} inputType={"password"} />
                 {error ? <h3>{error}</h3> : null}
             </section>
-            <ActionsBtns loading={loading} />
+            <AuthenticationBtns loading={loading} />
         </form>
     );
 };

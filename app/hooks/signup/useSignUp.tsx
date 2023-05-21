@@ -1,8 +1,9 @@
-import { ChangeEvent, useCallback, useReducer } from 'react';
+import React, { ChangeEvent, useReducer } from 'react';
 
 export enum SignupActionKind {
     USERNAME = 'USERNAME',
-    PASSWORD = 'PASSWORD'
+    PASSWORD = 'PASSWORD',
+    CONFIRM_PASSWORD = 'CONFIRM_PASSWORD'
 }
 
 interface SignupAction {
@@ -13,23 +14,25 @@ interface SignupAction {
 interface SignupState {
     username: string,
     password: string
+    confirmPassword: string
 }
 
 const initialState = {
-    username: "",
-    password: ""
+    username: '',
+    password: '',
+    confirmPassword: '',
 }
 
-export const useLogin = () => {
-
+const useSignUp = () => {
     const [state, dispatch] = useReducer(reducer, initialState)
 
-    const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>, type: SignupActionKind) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>, type: SignupActionKind) => {
         const value = e.target.value
-        dispatch({ type: type, payload: value })
-    }, [])
+        dispatch({ type, payload: value })
+    }
 
     return { state, handleChange }
+
 };
 
 function reducer(state: SignupState, action: SignupAction) {
@@ -38,8 +41,12 @@ function reducer(state: SignupState, action: SignupAction) {
             return { ...state, username: action.payload }
         case SignupActionKind.PASSWORD:
             return { ...state, password: action.payload }
+        case SignupActionKind.CONFIRM_PASSWORD:
+            return { ...state, confirmPassword: action.payload }
         default:
             return state
 
     }
 }
+
+export default useSignUp;

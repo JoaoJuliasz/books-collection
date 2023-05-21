@@ -4,12 +4,12 @@ import Link from 'next/link';
 import logo from '@/public/logo.svg'
 import Image from 'next/image';
 import SearchField from './SearchField/SearchField';
-import { getSession, useSession } from 'next-auth/react';
+import { getSession, signOut, useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 
 const Navbar = () => {
     const pathname = usePathname();
-    const hideNavbar = pathname === '/login'
+    const hideNavbar = pathname === '/login' || pathname === '/signup'
 
 
     const { data: session, status } = useSession()
@@ -39,12 +39,17 @@ const Navbar = () => {
                 </div>
                 {status !== 'loading' && !session ?
                     <div>
-                        <Link style={{ fontSize: '1.2rem', margin: '0 1em' }} href="/login">Login</Link>
+                        <Link style={{ fontSize: '1.2rem', margin: '0 1em' }} href="/login">Sign In</Link>
                     </div>
                     : null}
                 {session ?
                     <div>
-                        <Link style={{ fontSize: '1.2rem', margin: '0 1em' }} href="/logout">Logout</Link>
+                        <Link style={{ fontSize: '1.2rem', margin: '0 1em' }} href='/api/auth/signout'
+                            onClick={e => {
+                                e.preventDefault()
+                                signOut()
+                            }}>Sign Out
+                        </Link>
                     </div>
                     : null
                 }

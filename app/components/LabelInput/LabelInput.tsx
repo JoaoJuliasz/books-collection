@@ -1,21 +1,19 @@
 'use client'
 
 import { ChangeEvent, useRef, useState } from 'react';
-import { SignupActionKind } from '@/app/hooks/useLogin';
 
 import styles from './labelInput.module.scss'
 
 
 type Props = {
-    handleChange: (e: ChangeEvent<HTMLInputElement>, type: SignupActionKind) => void
+    handleChange: (e: ChangeEvent<HTMLInputElement>) => void
     value: string
-    name: 'username' | 'password'
+    name: 'username' | 'password' | 'confirm_password'
     inputType: string
     labelText: string
-    placeholder: string
 }
 
-const LabelInput = ({ handleChange, name, value, labelText, placeholder, inputType }: Props) => {
+const LabelInput = ({ handleChange, name, value, labelText, inputType }: Props) => {
 
     const [focus, setFocus] = useState<boolean>(false)
 
@@ -26,7 +24,7 @@ const LabelInput = ({ handleChange, name, value, labelText, placeholder, inputTy
             <label className={`${styles.label} ${(focus || value) ? styles.focus : ''}`} htmlFor={name}>{labelText}</label>
             <input ref={inputRef} className={styles.input} type={inputType} value={value}
                 onFocus={() => setFocus(true)} onBlur={() => setFocus(false)}
-                name={name} onChange={e => handleChange(e, SignupActionKind[name.toUpperCase() as 'USERNAME' | 'PASSWORD'])} />
+                name={name} onChange={e => handleChange(e)} />
         </div>
     );
 };

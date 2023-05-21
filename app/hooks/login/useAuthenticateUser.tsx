@@ -23,12 +23,12 @@ export const useAuthenticateUser = () => {
                 setError(result.error)
             }
             setLoading(false)
-            router.push('/')
+            if (!result?.error) router.push('/')
         } catch (error) {
             console.log(error)
             setLoading(false)
         }
-    }, [])
+    }, [router])
 
     return { loading, error, authenticateUser }
 

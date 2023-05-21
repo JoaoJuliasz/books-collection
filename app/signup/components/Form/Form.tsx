@@ -6,37 +6,19 @@ import React, { useState } from 'react';
 import LabelInput from '@/app/components/LabelInput/LabelInput';
 
 import styles from './form.module.scss'
-import { useAuthenticateUser } from '@/app/hooks/login/useAuthenticateUser';
+import { useCreateUser } from '@/app/hooks/signup/useCreateUser';
 
 
 const Form = () => {
 
-    const [loading, setLoading] = useState<boolean>(false)
     const [missingProperties, setMissingProperties] = useState<boolean>(false)
     const { state: { username, password, confirmPassword }, handleChange } = useSignUp()
-    const { authenticateUser } = useAuthenticateUser()
-
-
-    const createUser = async () => {
-        setLoading(true)
-        try {
-            const res = await fetch('/api/signup', {
-                method: 'POST',
-                body: JSON.stringify({ username, password })
-            })
-            const data = await res.json()
-            authenticateUser(username, password)
-            setLoading(false)
-        } catch (error) {
-            console.log(error)
-            setLoading(false)
-        }
-    }
+    const { loading, createUser } = useCreateUser()
 
     const handleSubmit = (e: any) => {
         e.preventDefault()
         if (password && confirmPassword) {
-            createUser()
+            createUser(username, password)
             setMissingProperties(false)
             return
         }

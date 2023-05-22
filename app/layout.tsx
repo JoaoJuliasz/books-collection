@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import Navbar from './components/Navbar/Navbar'
 import styles from './page.module.css'
 import { NextAuthProvider } from './providers'
+import { Toaster } from 'react-hot-toast'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -25,6 +26,7 @@ export default function RootLayout({
         <NextAuthProvider>
           <Navbar />
           <main className={styles.main}>
+          <Toaster />
             {children}
           </main>
         </NextAuthProvider>

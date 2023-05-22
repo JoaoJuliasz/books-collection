@@ -2,9 +2,7 @@ import { MongoClient } from "mongodb";
 import { NextResponse } from "next/server";
 import { hash } from 'bcryptjs';
 
-export async function POST(request: Request) {
-    // mongodb+srv://admin:aLwI3c9Rg1zdwkUx@cluster0.wlvhovp.mongodb.net/?retryWrites=true&w=majority
-
+export async function POST(request: Request, response: Response) {
     const { username, password } = await request.json()
 
     if (!username || !password) {
@@ -18,7 +16,7 @@ export async function POST(request: Request) {
     const checkExisting = await db.collection('users').findOne({ username: username })
 
     if (checkExisting) {
-        return new NextResponse(JSON.stringify({ message: 'username already exists!' }), { status: 422 })
+        return new NextResponse(JSON.stringify({ error: 'username already exists!' }), { status: 400 })
     }
 
     const status = await db.collection('users').insertOne({

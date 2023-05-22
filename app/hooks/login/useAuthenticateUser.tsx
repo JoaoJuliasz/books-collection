@@ -1,6 +1,7 @@
 import { signIn } from 'next-auth/react';
 import { useCallback, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-hot-toast';
 
 
 export const useAuthenticateUser = () => {
@@ -19,14 +20,15 @@ export const useAuthenticateUser = () => {
                 password,
             })
             if (result?.error) {
-                console.log(result.error)
-                setError(result.error)
+                throw new Error(result.error);
             }
+            router.push('/')
+        } catch (error: any) {
+            setError(error.message)
+            toast.error(error.message)
+        } finally {
             setLoading(false)
-            if (!result?.error) router.push('/')
-        } catch (error) {
-            console.log(error)
-            setLoading(false)
+
         }
     }, [router])
 

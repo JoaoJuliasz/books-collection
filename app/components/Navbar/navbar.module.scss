@@ -1,0 +1,22 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 1.2em 2em;
+    background: rgba(107, 106, 106, 0.6);
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 4px 7px;
+    color: rgb(255, 255, 255);
+    position: fixed;
+    z-index: 3;
+
+    .search {
+        display: flex;
+        width: 65%;
+    }
+
+    .links {
+        display: flex;
+        align-items: center;
+    }
+}

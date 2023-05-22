@@ -7,6 +7,7 @@ import LabelInput from '@/app/components/LabelInput/LabelInput';
 
 import styles from './form.module.scss'
 import { useCreateUser } from '@/app/hooks/signup/useCreateUser';
+import { toast } from 'react-hot-toast';
 
 
 const Form = () => {
@@ -24,7 +25,7 @@ const Form = () => {
         }
         setMissingProperties(true)
     }
-
+    
     return (
         <form className={styles.container} onSubmit={handleSubmit}>
             <AuthenticationLogo title="Sign Up" />

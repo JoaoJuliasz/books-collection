@@ -1,5 +1,4 @@
 import getListsTopBooks from '@/lib/getListsTopBooks'
-import { ToastContainer } from 'react-toastify'
 import ListsTopBooks from './components/ListsTopBooks/ListsTopBooks'
 import styles from './page.module.css'
 
@@ -12,7 +11,6 @@ export default async function Home() {
 
   const topBooksData: Promise<ListTopBooks> = getListsTopBooks()
   const topBooks = await topBooksData
-
   return (
     <div>
       <ListsTopBooks topBooks={topBooks} />

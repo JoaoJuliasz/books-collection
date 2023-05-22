@@ -11,5 +11,5 @@ export const NextAuthProvider = ({ children }: Props) => {
         <SessionProvider>
             {children}
         </SessionProvider>
-        );
+    );
 };

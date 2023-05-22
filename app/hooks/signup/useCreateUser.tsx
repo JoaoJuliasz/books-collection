@@ -1,28 +1,37 @@
-import React, { useCallback, useState } from 'react';
+import axios from 'axios';
+import { useCallback, useState } from 'react';
+import { toast } from 'react-hot-toast';
 import { useAuthenticateUser } from '../login/useAuthenticateUser';
 
 export const useCreateUser = () => {
 
     const [loading, setLoading] = useState<boolean>(false)
+    const [error, setError] = useState<string>("")
 
     const { authenticateUser } = useAuthenticateUser()
 
-
     const createUser = useCallback(async (username: string, password: string) => {
-        setLoading(true)
+        setLoading(true);
         try {
-            const res = await fetch('/api/signup', {
+            const response = await fetch('/api/signup', {
                 method: 'POST',
-                body: JSON.stringify({ username, password })
-            })
-            const data = await res.json()
-            authenticateUser(username, password)
-            setLoading(false)
-        } catch (error) {
-            console.log(error)
-            setLoading(false)
+                body: JSON.stringify({ username, password }),
+            });
+
+            if (!response.ok) {
+                const errorMessage = await response.json();
+                throw new Error(errorMessage.error);
+            }
+            
+            await response.json();
+            authenticateUser(username, password);
+        } catch (error: any) {
+            toast.error(error.message);
+        } finally {
+            setLoading(false);
         }
-    }, [authenticateUser])
+    }, [authenticateUser]);
+
 
     return { loading, createUser }
 };

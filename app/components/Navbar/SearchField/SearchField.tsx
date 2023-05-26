@@ -4,20 +4,32 @@ import Link from 'next/link';
 import Image from 'next/image';
 import glass from '@/public/glass.svg'
 import styles from './searchField.module.scss'
+import { toast } from 'react-hot-toast';
 
 
 const SearchField = () => {
 
     const [searchField, setSerchField] = useState<string>("")
     const [autocompleteItems, setAutocompleteItems] = useState<selectedBook[]>([])
+    const [loading, setLoading] = useState<boolean>(false)
 
     const node = useRef<HTMLDivElement | null>(null)
 
+    console.warn(loading)
+
     const triggerSearchedBooks = async () => {
         if (searchField) {
-            const res = await fetch(`http://localhost:3000/api/filtered?title=${searchField}`)
-            const data = await res.json()
-            setAutocompleteItems(data)
+            setLoading(true)
+            try {
+                const res = await fetch(`http://localhost:3000/api/filtered?title=${searchField}`)
+                const data = await res.json()
+                setAutocompleteItems(data)
+            } catch (error) {
+                toast.error("Something went wrong!")
+                console.log(error)
+            } finally {
+                setLoading(false)
+            }
         }
     }
 
@@ -52,14 +64,13 @@ const SearchField = () => {
         }
     }, [autocompleteItems])
 
-    console.warn(autocompleteItems)
-
     return (
         <div ref={node} className={styles.container}>
-            <div className={styles.inputContainer}>
+            <div className={`${styles.inputContainer} ${loading ? styles.loading : ''}`}>
                 <Image src={glass} alt="glass" className={styles.icon} />
                 <input type="text" onChange={e => setSerchField(e.target.value)}
                     className={styles.input} onFocus={handleInputFocus} placeholder="Search for a book!" />
+                {loading ? <span className={styles.loader} /> : null}
             </div>
             {autocompleteItems.length > 0 ?
                 (<div className={styles.autocomplete}>

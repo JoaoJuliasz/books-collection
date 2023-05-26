@@ -4,7 +4,7 @@ import Link from 'next/link';
 import logo from '@/public/logo.svg'
 import Image from 'next/image';
 import SearchField from './SearchField/SearchField';
-import { getSession, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 
 import styles from './navbar.module.scss'
@@ -17,34 +17,42 @@ const Navbar = () => {
 
     const { data: session, status } = useSession()
 
-    console.warn(session?.user)
-    console.warn(session?.user.name)
-
     if (hideNavbar) return null
 
     return (
         <nav className={styles.container}>
-            <section className={styles.search}>
+            <div className={styles.search}>
                 <Link href="/">
                     <Image src={logo} alt="logo" />
                 </Link>
                 <SearchField />
-            </section>
-            <section className={styles.links}>
-                <div>
-                    <Link style={{ margin: '0 0.3em', fontSize: '1.2rem' }} href="/lists">Lists</Link>
-                    <Link style={{ margin: '0 0.3em', fontSize: '1.2rem' }} href="/best-sellers">Best Sellers</Link>
+            </div>
+            <ul className={`${styles.links} ${status === 'loading' && !session ? styles.loading : styles.loaded}`}>
+                <div className={styles.pagesContainer}>
+                    <li className={styles.link}>
+                        <Link href="/lists">Lists</Link>
+                    </li>
+                    <li className={styles.link}>
+                        <Link href="/best-sellers">Best Sellers</Link>
+                    </li>
+                    {
+                        session?.user ?
+                            <li className={styles.link}>
+                                <Link href="/favorites">Favorites</Link>
+                            </li>
+                            : null
+                    }
                 </div>
                 {status !== 'loading' && !session ?
-                    <div>
-                        <Link style={{ fontSize: '1.2rem', margin: '0 1em' }} href="/login">Sign In</Link>
-                    </div>
+                    <li className={styles.link}>
+                        <Link href="/login">Sign In</Link>
+                    </li>
                     : null}
                 {session ?
                     <User />
                     : null
                 }
-            </section>
+            </ul>
         </nav >
     );
 };

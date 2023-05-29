@@ -1,37 +1,17 @@
 'use client'
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import glass from '@/public/glass.svg'
 import styles from './searchField.module.scss'
-import { toast } from 'react-hot-toast';
+import useSearchBooks from '@/app/hooks/searchField/useSearchBooks';
 
 
 const SearchField = () => {
 
-    const [searchField, setSerchField] = useState<string>("")
-    const [autocompleteItems, setAutocompleteItems] = useState<selectedBook[]>([])
-    const [loading, setLoading] = useState<boolean>(false)
+    const { searchField, autocompleteItems, loading, triggerSearchedBooks, setSerchField, setAutocompleteItems } = useSearchBooks()
 
     const node = useRef<HTMLDivElement | null>(null)
-
-    console.warn(loading)
-
-    const triggerSearchedBooks = async () => {
-        if (searchField) {
-            setLoading(true)
-            try {
-                const res = await fetch(`http://localhost:3000/api/filtered?title=${searchField}`)
-                const data = await res.json()
-                setAutocompleteItems(data)
-            } catch (error) {
-                toast.error("Something went wrong!")
-                console.log(error)
-            } finally {
-                setLoading(false)
-            }
-        }
-    }
 
     const handleInputFocus = () => {
         triggerSearchedBooks()

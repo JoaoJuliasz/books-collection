@@ -11,10 +11,9 @@ import styles from './navbar.module.scss'
 import User from './User/User';
 
 const Navbar = () => {
+    
     const pathname = usePathname();
     const hideNavbar = pathname === '/login' || pathname === '/signup'
-
-
     const { data: session, status } = useSession()
 
     if (hideNavbar) return null

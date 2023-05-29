@@ -57,7 +57,7 @@ const useSearchBooks = () => {
     }
 
     const setAutocompleteItems = (payload: selectedBook[]) => {
-        dispatch({ type: SearchActionKind.SET_LOADING, payload })
+        dispatch({ type: SearchActionKind.AUTOCOMPLETE_ITEMS, payload })
     }
 
     const setSerchField = (payload: string) => {

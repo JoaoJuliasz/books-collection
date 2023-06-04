@@ -6,8 +6,8 @@ import glass from '@/public/glass.svg'
 
 import styles from './searchField.module.scss'
 
-import useSearchBooks from '@/app/hooks/searchField/useSearchBooks';
-import useAutocomplete from '@/app/hooks/searchField/useAutocomplete';
+import useSearchBooks from '@/hooks/searchField/useSearchBooks';
+import useAutocomplete from '@/hooks/searchField/useAutocomplete';
 import AutocompleteLoading from './AutocompleteLoading';
 
 

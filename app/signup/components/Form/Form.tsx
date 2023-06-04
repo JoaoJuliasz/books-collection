@@ -1,12 +1,12 @@
 'use client'
 import AuthenticationBtns from '@/app/components/AuthenticationBtns/AuthenticationBtns';
 import AuthenticationLogo from '@/app/components/AuthenticationLogo/AuthenticationLogo';
-import useSignUp, { SignupActionKind } from '@/app/hooks/signup/useSignUp';
+import useSignUp, { SignupActionKind } from '@/hooks/signup/useSignUp';
 import React, { useState } from 'react';
 import LabelInput from '@/app/components/LabelInput/LabelInput';
 
 import styles from './form.module.scss'
-import { useCreateUser } from '@/app/hooks/signup/useCreateUser';
+import { useCreateUser } from '@/hooks/signup/useCreateUser';
 import { toast } from 'react-hot-toast';
 
 

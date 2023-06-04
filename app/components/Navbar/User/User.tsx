@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import user from '@/public/user-loggeed.svg'
 
 import styles from './user.module.scss'
+import Links from '../Links/Links';
 
 
 const User = () => {
@@ -21,12 +22,18 @@ const User = () => {
         <div className={styles.container}>
             <Image src={user} alt="logo" height={30} onClick={handleShowUser} className={styles.img} />
             {showSignOut ?
-                <Link className={styles.signOut} href='/api/auth/signout'
-                    onClick={e => {
-                        e.preventDefault()
-                        signOut()
-                    }}>Sign Out
-                </Link> : null}
+                <div className={styles.signOut}>
+                    <div className={styles.links}>
+                        <Links />
+                    </div>
+                    <Link href='/api/auth/signout'
+                        onClick={e => {
+                            e.preventDefault()
+                            signOut()
+                        }}>Sign Out
+                    </Link>
+                </div>
+                : null}
         </div>
     );
 };

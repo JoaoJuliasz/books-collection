@@ -1,10 +1,10 @@
 'use client'
 
-import { SignInActionKind, useLogin } from '@/app/hooks/login/useLogin';
+import { SignInActionKind, useLogin } from '@/hooks/login/useLogin';
 import React from 'react';
 import LabelInput from '@/app/components/LabelInput/LabelInput';
 
-import { useAuthenticateUser } from '@/app/hooks/login/useAuthenticateUser';
+import { useAuthenticateUser } from '@/hooks/login/useAuthenticateUser';
 
 import styles from './form.module.scss'
 import AuthenticationLogo from '@/app/components/AuthenticationLogo/AuthenticationLogo';

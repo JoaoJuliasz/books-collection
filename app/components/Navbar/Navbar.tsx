@@ -9,9 +9,10 @@ import { usePathname } from 'next/navigation';
 
 import styles from './navbar.module.scss'
 import User from './User/User';
+import Links from './Links/Links';
 
 const Navbar = () => {
-    
+
     const pathname = usePathname();
     const hideNavbar = pathname === '/login' || pathname === '/signup'
     const { data: session, status } = useSession()
@@ -28,19 +29,7 @@ const Navbar = () => {
             </div>
             <ul className={`${styles.links} ${status === 'loading' && !session ? styles.loading : styles.loaded}`}>
                 <div className={styles.pagesContainer}>
-                    <li className={styles.link}>
-                        <Link href="/lists">Lists</Link>
-                    </li>
-                    <li className={styles.link}>
-                        <Link href="/best-sellers">Best Sellers</Link>
-                    </li>
-                    {
-                        session?.user ?
-                            <li className={styles.link}>
-                                <Link href="/favorites">Favorites</Link>
-                            </li>
-                            : null
-                    }
+                    <Links />
                 </div>
                 {status !== 'loading' && !session ?
                     <li className={styles.link}>

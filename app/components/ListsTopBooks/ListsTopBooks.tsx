@@ -1,11 +1,24 @@
-import Carousel from "../Carousel/Carousel";
+'use client'
 import Item from "./Item";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
 
 type Props = {
     topBooks: ListTopBooks
 }
 
 const ListsTopBooks = ({ topBooks }: Props) => {
+
+    const getSlidesPerView = () => {
+        const windowWidth = window.innerWidth
+        if(windowWidth > 1100) return 4
+        if(windowWidth > 800) return 3
+        if(windowWidth > 600) return 2
+        if(windowWidth > 500) return 1
+    }
 
     return (
         <>
@@ -15,15 +28,17 @@ const ListsTopBooks = ({ topBooks }: Props) => {
                         <section key={section.list_id} style={{ margin: '4px' }}>
                             <h3 style={{ margin: '1rem 0.7rem', color: '#858585' }}>{section.list_name}</h3>
                             <ul style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-                                <Carousel>
+                                <Swiper slidesPerView={getSlidesPerView()}>
                                     {
                                         section.books.map(book => {
                                             return (
-                                                <Item listName={section.list_name} book={book} key={book.rank} />
+                                                <SwiperSlide key={book.rank}>
+                                                    <Item listName={section.list_name} book={book} key={book.rank} />
+                                                </SwiperSlide>
                                             )
                                         })
                                     }
-                                </Carousel>
+                                </Swiper>
                             </ul>
                         </section>
                     )

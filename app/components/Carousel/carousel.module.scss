@@ -27,14 +27,14 @@
       transform: scale(1.05);
     }
 
-    @media (max-width: 460px) {
-      width: 100%;
-      margin: 0 4px;
-    }
+    // @media (max-width: 460px) {
+    //   width: 100%;
+    //   margin: 0 4px;
+    // }
 
-    @media (min-width: 945px) and (max-width: 1349px) {
-      width: 33%;
-      margin: 0 30px;
-    }
+    // @media (min-width: 945px) and (max-width: 1349px) {
+    //   width: 33%;
+    //   margin: 0 30px;
+    // }
   }
 }

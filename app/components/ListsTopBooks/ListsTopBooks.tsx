@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
 import "swiper/css";
+import { useCallback } from "react";
 
 type Props = {
     topBooks: ListTopBooks
@@ -12,13 +13,15 @@ type Props = {
 
 const ListsTopBooks = ({ topBooks }: Props) => {
 
-    const getSlidesPerView = () => {
+    const getSlidesPerView = useCallback(() => {
         const windowWidth = window.innerWidth
         if(windowWidth > 1100) return 4
         if(windowWidth > 800) return 3
         if(windowWidth > 600) return 2
         if(windowWidth > 500) return 1
-    }
+    }, [])
+
+    console.warn(topBooks)
 
     return (
         <>

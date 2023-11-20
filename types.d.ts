@@ -15,14 +15,17 @@ type ListTopBooks = {
         published_date_description: string
         next_published_date: string
         previous_published_date: string
-        lists: {
-            list_id: string
-            list_name: string
-            display_name: string
-            list_image: string
-            books: ListBook[]
-        }[]
+        lists: ListTopBooksItem[]
     }
+}
+
+type ListTopBooksItem = {
+    
+    list_id: string
+    list_name: string
+    display_name: string
+    list_image: string
+    books: ListBook[]
 }
 
 type ListItem = {

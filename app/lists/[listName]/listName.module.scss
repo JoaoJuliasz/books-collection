@@ -1,0 +1,21 @@
+.container {
+    padding: 20px;
+
+    .title {
+        font-size: 24px;
+        font-weight: 600;
+        text-transform: none;
+        text-align: left;
+        letter-spacing: 0px;
+        line-height: 32px;
+        color: #666464;
+    }
+
+    .wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: start;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+}

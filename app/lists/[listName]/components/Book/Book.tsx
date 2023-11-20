@@ -1,6 +1,7 @@
-import Image from 'next/image';
-import Link from 'next/link';
 import React from 'react';
+import Link from 'next/link';
+
+import styles from './book.module.scss';
 
 type Props = {
     bookName: string
@@ -12,11 +13,13 @@ type Props = {
 
 const Book = ({ bookName, listName, image, rank, author }: Props) => {
     return (
-        <Link style={{ margin: '7px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+        <Link className={styles.container}
             href={`/lists/${listName}/${bookName}`}>
-            <img width={150} height={150} alt={bookName} src={image} />
-            <h4>{rank}. {bookName}</h4>
-            <h6>By {author}</h6>
+            <img alt={bookName} src={image} />
+            <div className={styles.bookName}>
+                <h4>{rank}. {bookName}</h4>
+                <h6>By {author}</h6>
+            </div>
         </Link>
     );
 };
